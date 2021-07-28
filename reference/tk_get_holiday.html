@@ -320,7 +320,7 @@ Filter on an index to identify all holidays that are commonly non-working.</p>
 <span class='co'># --- BASIC USAGE ----</span>
 
 <span class='fu'>tk_get_holiday_signature</span><span class='op'>(</span><span class='va'>idx</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 365 x 130</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 365 × 130</span>
 #&gt;    index      exch_NYSE exch_LONDON exch_NERC exch_TSX exch_ZURICH locale_GB
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> 2017-01-01         0           0         0        0           0         0
@@ -377,7 +377,7 @@ Filter on an index to identify all holidays that are commonly non-working.</p>
 <span class='co'># List available holidays - see patterns</span>
 <span class='fu'>tk_get_holidays_by_year</span><span class='op'>(</span><span class='fl'>2020</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>holiday_name</span> <span class='op'>%&gt;%</span> <span class='fu'>str_detect</span><span class='op'>(</span><span class='st'>"US_"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 17 x 3</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 17 × 3</span>
 #&gt;    date       locale holiday_name            
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                   
 #&gt; <span style='color: #BCBCBC;'> 1</span> 2020-01-01 US     US_NewYearsDay          
@@ -404,7 +404,7 @@ Filter on an index to identify all holidays that are commonly non-working.</p>
     holiday_pattern <span class='op'>=</span> <span class='st'>"(US_NewYears)|(US_Christmas)|(US_Thanks)"</span>,
     locale_set      <span class='op'>=</span> <span class='st'>"none"</span>,
     exchange_set    <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 365 x 4</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 365 × 4</span>
 #&gt;    index      US_NewYearsDay US_ThanksgivingDay US_ChristmasDay
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> 2017-01-01              1                  0               0
@@ -426,7 +426,7 @@ Filter on an index to identify all holidays that are commonly non-working.</p>
     holiday_pattern <span class='op'>=</span> <span class='st'>"$^"</span>, <span class='co'># Matches nothing on purpose</span>
     locale_set      <span class='op'>=</span> <span class='st'>"US"</span>,
     exchange_set    <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 365 x 2</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 365 × 2</span>
 #&gt;    index      locale_US
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> 2017-01-01         1
@@ -446,7 +446,7 @@ Filter on an index to identify all holidays that are commonly non-working.</p>
     holiday_pattern <span class='op'>=</span> <span class='st'>"$^"</span>, <span class='co'># Matches nothing on purpose</span>
     locale_set      <span class='op'>=</span> <span class='st'>"none"</span>,
     exchange_set    <span class='op'>=</span> <span class='st'>"NYSE"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 365 x 2</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 365 × 2</span>
 #&gt;    index      exch_NYSE
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> 2017-01-01         0

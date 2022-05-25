@@ -18,7 +18,7 @@ consolidates 20+ lines of ggplot2 code, and scales well to many time series."><m
     
     <a class="navbar-brand me-2" href="../index.html">timetk</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,8 +134,9 @@ consolidates 20+ lines of <code>ggplot2</code> code, and scales well to many tim
   .facet_nrow <span class="op">=</span> <span class="fl">1</span>,
   .facet_scales <span class="op">=</span> <span class="st">"free_y"</span>,
   .facet_dir <span class="op">=</span> <span class="st">"h"</span>,
-  .facet_collapse <span class="op">=</span> <span class="cn">TRUE</span>,
+  .facet_collapse <span class="op">=</span> <span class="cn">FALSE</span>,
   .facet_collapse_sep <span class="op">=</span> <span class="st">" "</span>,
+  .facet_strip_remove <span class="op">=</span> <span class="cn">FALSE</span>,
   .line_color <span class="op">=</span> <span class="st">"#2c3e50"</span>,
   .line_size <span class="op">=</span> <span class="fl">0.5</span>,
   .line_type <span class="op">=</span> <span class="fl">1</span>,
@@ -156,8 +157,9 @@ consolidates 20+ lines of <code>ggplot2</code> code, and scales well to many tim
   .y_lab <span class="op">=</span> <span class="st">""</span>,
   .color_lab <span class="op">=</span> <span class="st">"Legend"</span>,
   .interactive <span class="op">=</span> <span class="cn">TRUE</span>,
+  .plotly_slider <span class="op">=</span> <span class="cn">FALSE</span>,
   .trelliscope <span class="op">=</span> <span class="cn">FALSE</span>,
-  .plotly_slider <span class="op">=</span> <span class="cn">FALSE</span>
+  .trelliscope_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -189,6 +191,8 @@ Options include "fixed", "free", "free_y", "free_x"</p></dd>
 multiple facet strips.</p></dd>
 <dt>.facet_collapse_sep</dt>
 <dd><p>The separator used for collapsing facets.</p></dd>
+<dt>.facet_strip_remove</dt>
+<dd><p>Whether or not to remove the strip and text label for each facet.</p></dd>
 <dt>.line_color</dt>
 <dd><p>Line color. Overrided if <code>.color_var</code> is specified.</p></dd>
 <dt>.line_size</dt>
@@ -236,11 +240,18 @@ Either 0, 1, 2 (0 = lest flexible, 2 = more flexible).</p></dd>
 <dd><p>Legend label if a <code>color_var</code> is used.</p></dd>
 <dt>.interactive</dt>
 <dd><p>Returns either a static (<code>ggplot2</code>) visualization or an interactive (<code>plotly</code>) visualization</p></dd>
+<dt>.plotly_slider</dt>
+<dd><p>If <code>TRUE</code>, returns a plotly date range slider.</p></dd>
 <dt>.trelliscope</dt>
 <dd><p>Returns either a normal plot or a trelliscopejs plot (great for many time series)
 Must have <code>trelliscopejs</code> installed.</p></dd>
-<dt>.plotly_slider</dt>
-<dd><p>If TRUE, returns a plotly date range slider.</p></dd>
+<dt>.trelliscope_params</dt>
+<dd><p>Pass parameters to the <code><a href="https://rdrr.io/pkg/trelliscopejs/man/facet_trelliscope.html" class="external-link">trelliscopejs::facet_trelliscope()</a></code> function as a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>.
+The only parameters that cannot be passed are:</p><ul><li><p><code>ncol</code>: use <code>.facet_ncol</code></p></li>
+<li><p><code>nrow</code>: use <code>.facet_nrow</code></p></li>
+<li><p><code>scales</code>: use <code>facet_scales</code></p></li>
+<li><p><code>as_plotly</code>: use <code>.interactive</code></p></li>
+</ul></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -298,11 +309,12 @@ or a numeric value (e.g. <code>smooth_period = 365</code>).</p>
 <span class="r-in"><span class="va">FANG</span> <span class="op"><a href="https://rdrr.io/pkg/tidyquant/man/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html" class="external-link">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/tidyquant/man/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">    <span class="fu">plot_time_series</span><span class="op">(</span><span class="va">date</span>, <span class="va">adjusted</span>,</span>
-<span class="r-in">                     .facet_vars   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">symbol</span>, <span class="va">year</span><span class="op">)</span>, <span class="co"># add groups/facets</span></span>
-<span class="r-in">                     .color_var    <span class="op">=</span> <span class="va">year</span>,            <span class="co"># color by year</span></span>
-<span class="r-in">                     .facet_ncol   <span class="op">=</span> <span class="fl">4</span>,</span>
-<span class="r-in">                     .facet_scales <span class="op">=</span> <span class="st">"free"</span>,</span>
-<span class="r-in">                     .interactive  <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in">                     .facet_vars     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">symbol</span>, <span class="va">year</span><span class="op">)</span>, <span class="co"># add groups/facets</span></span>
+<span class="r-in">                     .color_var      <span class="op">=</span> <span class="va">year</span>,            <span class="co"># color by year</span></span>
+<span class="r-in">                     .facet_ncol     <span class="op">=</span> <span class="fl">4</span>,</span>
+<span class="r-in">                     .facet_scales   <span class="op">=</span> <span class="st">"free"</span>,</span>
+<span class="r-in">                     .facet_collapse <span class="op">=</span> <span class="cn">TRUE</span>,  <span class="co"># combine group strip text into 1 line</span></span>
+<span class="r-in">                     .interactive    <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="plot_time_series-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Can apply transformations to .value or .color_var</span></span>
@@ -331,7 +343,7 @@ or a numeric value (e.g. <code>smooth_period = 365</code>).</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

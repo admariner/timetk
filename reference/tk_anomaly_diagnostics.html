@@ -18,7 +18,7 @@ It performs automatic anomaly detection for one or more time series groups."><me
     
     <a class="navbar-brand me-2" href="../index.html">timetk</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,47 +124,64 @@ It performs automatic anomaly detection for one or more time series groups.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">tk_anomaly_diagnostics</span><span class="op">(</span>
-  <span class="va">.data</span>,
-  <span class="va">.date_var</span>,
-  <span class="va">.value</span>,
-  .frequency <span class="op">=</span> <span class="st">"auto"</span>,
-  .trend <span class="op">=</span> <span class="st">"auto"</span>,
-  .alpha <span class="op">=</span> <span class="fl">0.05</span>,
-  .max_anomalies <span class="op">=</span> <span class="fl">0.2</span>,
-  .message <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tk_anomaly_diagnostics</span><span class="op">(</span></span>
+<span>  <span class="va">.data</span>,</span>
+<span>  <span class="va">.date_var</span>,</span>
+<span>  <span class="va">.value</span>,</span>
+<span>  .frequency <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>  .trend <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>  .alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  .max_anomalies <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>  .message <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>.data</dt>
 <dd><p>A <code>tibble</code> or <code>data.frame</code> with a time-based column</p></dd>
+
+
 <dt>.date_var</dt>
 <dd><p>A column containing either date or date-time values</p></dd>
+
+
 <dt>.value</dt>
 <dd><p>A column containing numeric values</p></dd>
+
+
 <dt>.frequency</dt>
 <dd><p>Controls the seasonal adjustment (removal of seasonality).
 Input can be either "auto", a time-based definition (e.g. "2 weeks"),
 or a numeric number of observations per frequency (e.g. 10).
 Refer to <code><a href="tk_get_frequency.html">tk_get_frequency()</a></code>.</p></dd>
+
+
 <dt>.trend</dt>
 <dd><p>Controls the trend component.
 For STL, trend controls the sensitivity of the LOESS smoother, which is used to remove the remainder.
 Refer to <code><a href="tk_get_frequency.html">tk_get_trend()</a></code>.</p></dd>
+
+
 <dt>.alpha</dt>
 <dd><p>Controls the width of the "normal" range. Lower values are more conservative
 while higher values are less prone to incorrectly classifying "normal" observations.</p></dd>
+
+
 <dt>.max_anomalies</dt>
 <dd><p>The maximum percent of anomalies permitted to be identified.</p></dd>
+
+
 <dt>.message</dt>
 <dd><p>A boolean. If <code>TRUE</code>, will output information related to automatic frequency
 and trend selection (if applicable).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>tibble</code> or <code>data.frame</code> with STL Decomposition Features
+    
+
+<p>A <code>tibble</code> or <code>data.frame</code> with STL Decomposition Features
 (observed, season, trend, remainder, seasadj) and
 Anomaly Features (remainder_l1, remainder_l2, anomaly, recomposed_l1, and recomposed_l2)</p>
     </div>
@@ -213,13 +230,13 @@ A Novel Technique for Long-Term Anomaly Detection in the Cloud. Twitter Inc.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/timetk" class="external-link">timetk</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">walmart_sales_weekly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1_1"</span>, <span class="st">"1_3"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">tk_anomaly_diagnostics</span><span class="op">(</span><span class="va">Date</span>, <span class="va">Weekly_Sales</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/timetk" class="external-link">timetk</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">walmart_sales_weekly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1_1"</span>, <span class="st">"1_3"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">tk_anomaly_diagnostics</span><span class="op">(</span><span class="va">Date</span>, <span class="va">Weekly_Sales</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> frequency = 13 observations per 1 quarter</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> trend = 52 observations per 1 year</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> frequency = 13 observations per 1 quarter</span>
@@ -240,7 +257,7 @@ A Novel Technique for Long-Term Anomaly Detection in the Cloud. Twitter Inc.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 1_1   2010-04-09   <span style="text-decoration: underline;">42</span>961.  <span style="text-decoration: underline;">1</span>132. <span style="text-decoration: underline;">18</span>855.    <span style="text-decoration: underline;">22</span>974.  <span style="text-decoration: underline;">41</span>829.      -<span style="color: #BB0000; text-decoration: underline;">15</span><span style="color: #BB0000;">981.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 276 more rows, and 4 more variables: remainder_l2 &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   anomaly &lt;chr&gt;, recomposed_l1 &lt;dbl&gt;, recomposed_l2 &lt;dbl&gt;</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -252,7 +269,7 @@ A Novel Technique for Long-Term Anomaly Detection in the Cloud. Twitter Inc.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

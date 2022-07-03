@@ -20,7 +20,7 @@ calculation by groups like "5 seconds", "week", or "3 months".'><meta property="
     
     <a class="navbar-brand me-2" href="../index.html">timetk</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,22 +127,26 @@ calculation by groups like "5 seconds", "week", or "3 months".</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">mutate_by_time</span><span class="op">(</span>
-  <span class="va">.data</span>,
-  <span class="va">.date_var</span>,
-  .by <span class="op">=</span> <span class="st">"day"</span>,
-  <span class="va">...</span>,
-  .type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"floor"</span>, <span class="st">"ceiling"</span>, <span class="st">"round"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mutate_by_time</span><span class="op">(</span></span>
+<span>  <span class="va">.data</span>,</span>
+<span>  <span class="va">.date_var</span>,</span>
+<span>  .by <span class="op">=</span> <span class="st">"day"</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  .type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"floor"</span>, <span class="st">"ceiling"</span>, <span class="st">"round"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>.data</dt>
 <dd><p>A <code>tbl</code> object or <code>data.frame</code></p></dd>
+
+
 <dt>.date_var</dt>
 <dd><p>A column containing date or date-time values to summarize.
 If missing, attempts to auto-detect date column.</p></dd>
+
+
 <dt>.by</dt>
 <dd><p>A time unit to summarise by.
 Time units are collapsed using <code><a href="https://lubridate.tidyverse.org/reference/round_date.html" class="external-link">lubridate::floor_date()</a></code> or <code><a href="https://lubridate.tidyverse.org/reference/round_date.html" class="external-link">lubridate::ceiling_date()</a></code>.</p>
@@ -158,6 +162,8 @@ Time units are collapsed using <code><a href="https://lubridate.tidyverse.org/re
 <li><p><code>halfyear</code></p></li>
 <li><p><code>year</code></p></li>
 </ul><p>Arbitrary unique English abbreviations as in the <code><a href="https://lubridate.tidyverse.org/reference/period.html" class="external-link">lubridate::period()</a></code> constructor are allowed.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Name-value pairs.
 The name gives the name of the column in the output.</p>
@@ -167,12 +173,19 @@ if ungrouped).</p></li>
 <li><p><code>NULL</code>, to remove the column.</p></li>
 <li><p>A data frame or tibble, to create multiple columns in the output.</p></li>
 </ul></dd>
+
+
 <dt>.type</dt>
 <dd><p>One of "floor", "ceiling", or "round. Defaults to "floor". See <code><a href="https://lubridate.tidyverse.org/reference/round_date.html" class="external-link">lubridate::round_date</a></code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>tibble</code> or <code>data.frame</code></p>
+    
+
+<p>A <code>tibble</code> or <code>data.frame</code></p>
+
+
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -190,21 +203,21 @@ if ungrouped).</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Libraries</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/timetk" class="external-link">timetk</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># First value in each month</span></span>
-<span class="r-in"><span class="va">m4_daily_first_by_month_tbl</span> <span class="op">&lt;-</span> <span class="va">m4_daily</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">mutate_by_time</span><span class="op">(</span></span>
-<span class="r-in">        .date_var <span class="op">=</span> <span class="va">date</span>,</span>
-<span class="r-in">        .by       <span class="op">=</span> <span class="st">"month"</span>, <span class="co"># Setup for monthly aggregation</span></span>
-<span class="r-in">        <span class="co"># mutate recycles a single value</span></span>
-<span class="r-in">        first_value_by_month  <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in"><span class="va">m4_daily_first_by_month_tbl</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Libraries</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/timetk" class="external-link">timetk</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># First value in each month</span></span></span>
+<span class="r-in"><span><span class="va">m4_daily_first_by_month_tbl</span> <span class="op">&lt;-</span> <span class="va">m4_daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">mutate_by_time</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        .date_var <span class="op">=</span> <span class="va">date</span>,</span></span>
+<span class="r-in"><span>        .by       <span class="op">=</span> <span class="st">"month"</span>, <span class="co"># Setup for monthly aggregation</span></span></span>
+<span class="r-in"><span>        <span class="co"># mutate recycles a single value</span></span></span>
+<span class="r-in"><span>        first_value_by_month  <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">m4_daily_first_by_month_tbl</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 9,743 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   id [4]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id    date       value first_value_by_month</span>
@@ -220,15 +233,15 @@ if ungrouped).</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> D10   2014-07-11 <span style="text-decoration: underline;">2</span>010                 <span style="text-decoration: underline;">2</span>076.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> D10   2014-07-12 <span style="text-decoration: underline;">2</span>002.                <span style="text-decoration: underline;">2</span>076.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 9,733 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Visualize Time Series vs 1st Value Each Month</span></span>
-<span class="r-in"><span class="va">m4_daily_first_by_month_tbl</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span><span class="va">value</span><span class="op">:</span><span class="va">first_value_by_month</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="plot_time_series.html">plot_time_series</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">value</span>, <span class="va">name</span>,</span>
-<span class="r-in">                     .facet_scale <span class="op">=</span> <span class="st">"free"</span>, .facet_ncol <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">                     .smooth <span class="op">=</span> <span class="cn">FALSE</span>, .interactive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Visualize Time Series vs 1st Value Each Month</span></span></span>
+<span class="r-in"><span><span class="va">m4_daily_first_by_month_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span><span class="va">value</span><span class="op">:</span><span class="va">first_value_by_month</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="plot_time_series.html">plot_time_series</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">value</span>, <span class="va">name</span>,</span></span>
+<span class="r-in"><span>                     .facet_scale <span class="op">=</span> <span class="st">"free"</span>, .facet_ncol <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>                     .smooth <span class="op">=</span> <span class="cn">FALSE</span>, .interactive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="mutate_by_time-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -240,7 +253,7 @@ if ungrouped).</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

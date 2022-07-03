@@ -18,7 +18,7 @@ diff_inv_vec() inverts the differencing transformation."><meta property="og:imag
     
     <a class="navbar-brand me-2" href="../index.html">timetk</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,42 +124,55 @@ diff_inv_vec() inverts the differencing transformation."><meta property="og:imag
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">diff_vec</span><span class="op">(</span>
-  <span class="va">x</span>,
-  lag <span class="op">=</span> <span class="fl">1</span>,
-  difference <span class="op">=</span> <span class="fl">1</span>,
-  log <span class="op">=</span> <span class="cn">FALSE</span>,
-  initial_values <span class="op">=</span> <span class="cn">NULL</span>,
-  silent <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="fu">diff_inv_vec</span><span class="op">(</span><span class="va">x</span>, lag <span class="op">=</span> <span class="fl">1</span>, difference <span class="op">=</span> <span class="fl">1</span>, log <span class="op">=</span> <span class="cn">FALSE</span>, initial_values <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">diff_vec</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  lag <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  difference <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  log <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  initial_values <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  silent <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">diff_inv_vec</span><span class="op">(</span><span class="va">x</span>, lag <span class="op">=</span> <span class="fl">1</span>, difference <span class="op">=</span> <span class="fl">1</span>, log <span class="op">=</span> <span class="cn">FALSE</span>, initial_values <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>A numeric vector to be differenced or inverted.</p></dd>
+
+
 <dt>lag</dt>
 <dd><p>Which lag (how far back) to be included in the differencing calculation.</p></dd>
+
+
 <dt>difference</dt>
 <dd><p>The number of differences to perform.</p><ul><li><p>1 Difference is equivalent to measuring period change.</p></li>
 <li><p>2 Differences is equivalent to measuring period acceleration.</p></li>
 </ul></dd>
+
+
 <dt>log</dt>
 <dd><p>If log differences should be calculated.
 <em>Note that difference inversion of a log-difference is approximate.</em></p></dd>
+
+
 <dt>initial_values</dt>
 <dd><p>Only used in the <code>diff_vec_inv()</code> operation.
 A numeric vector of the initial values, which are used to invert differences.
 This vector is the original values that are the length of the <code>NA</code> missing differences.</p></dd>
+
+
 <dt>silent</dt>
 <dd><p>Whether or not to report the initial values used to invert the difference
 as a message.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A numeric vector</p>
+    
+
+<p>A numeric vector</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -195,48 +208,48 @@ where <code>diff_vec(difference = 1, log = TRUE) %&gt;% exp()</code> is approxim
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/timetk" class="external-link">timetk</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># --- USAGE ----</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">diff_vec</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, lag <span class="op">=</span> <span class="fl">2</span>, difference <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">diff_inv_vec</span><span class="op">(</span>lag <span class="op">=</span> <span class="fl">2</span>, difference <span class="op">=</span> <span class="fl">2</span>, initial_values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/timetk" class="external-link">timetk</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># --- USAGE ----</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">diff_vec</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, lag <span class="op">=</span> <span class="fl">2</span>, difference <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">diff_inv_vec</span><span class="op">(</span>lag <span class="op">=</span> <span class="fl">2</span>, difference <span class="op">=</span> <span class="fl">2</span>, initial_values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> diff_vec(): Initial values: 1, 2, 3, 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1  2  3  4  5  6  7  8  9 10</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># --- VECTOR ----</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Get Change</span></span>
-<span class="r-in"><span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">diff_vec</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># --- VECTOR ----</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Get Change</span></span></span>
+<span class="r-in"><span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">diff_vec</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> diff_vec(): Initial values: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] NA  1  1  1  1  1  1  1  1  1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Get Acceleration</span></span>
-<span class="r-in"><span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">diff_vec</span><span class="op">(</span>difference <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Get Acceleration</span></span></span>
+<span class="r-in"><span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">diff_vec</span><span class="op">(</span>difference <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> diff_vec(): Initial values: 1, 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] NA NA  0  0  0  0  0  0  0  0</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Get approximate rate of change</span></span>
-<span class="r-in"><span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">diff_vec</span><span class="op">(</span>log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Get approximate rate of change</span></span></span>
+<span class="r-in"><span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">diff_vec</span><span class="op">(</span>log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> diff_vec(): Initial values: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]        NA 1.0000000 0.5000000 0.3333333 0.2500000 0.2000000 0.1666667</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.1428571 0.1250000 0.1111111</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># --- MUTATE ----</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">m4_daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>difference <span class="op">=</span> <span class="fu">diff_vec</span><span class="op">(</span><span class="va">value</span>, lag <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span class="r-in">        difference_inv <span class="op">=</span> <span class="fu">diff_inv_vec</span><span class="op">(</span></span>
-<span class="r-in">            <span class="va">difference</span>,</span>
-<span class="r-in">            lag <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">            <span class="co"># Add initial value to calculate the inverse difference</span></span>
-<span class="r-in">            initial_values <span class="op">=</span> <span class="va">value</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span class="r-in">        <span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># --- MUTATE ----</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">m4_daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>difference <span class="op">=</span> <span class="fu">diff_vec</span><span class="op">(</span><span class="va">value</span>, lag <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        difference_inv <span class="op">=</span> <span class="fu">diff_inv_vec</span><span class="op">(</span></span></span>
+<span class="r-in"><span>            <span class="va">difference</span>,</span></span>
+<span class="r-in"><span>            lag <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>            <span class="co"># Add initial value to calculate the inverse difference</span></span></span>
+<span class="r-in"><span>            initial_values <span class="op">=</span> <span class="va">value</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> diff_vec(): Initial values: 2076.2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> diff_vec(): Initial values: 1821.9</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> diff_vec(): Initial values: 9109.38</span>
@@ -256,9 +269,9 @@ where <code>diff_vec(difference = 1, log = TRUE) %&gt;% exp()</code> is approxim
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> D10   2014-07-11 <span style="text-decoration: underline;">2</span>010       2.60           <span style="text-decoration: underline;">2</span>010 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> D10   2014-07-12 <span style="text-decoration: underline;">2</span>002.     -<span style="color: #BB0000;">8.5</span>            <span style="text-decoration: underline;">2</span>002.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 9,733 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -270,7 +283,7 @@ where <code>diff_vec(difference = 1, log = TRUE) %&gt;% exp()</code> is approxim
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

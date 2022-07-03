@@ -22,7 +22,7 @@ The auto_lambda() helps in selecting the optimal lambda value."><meta property="
     
     <a class="navbar-brand me-2" href="../index.html">timetk</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,34 +130,45 @@ The <code>auto_lambda()</code> helps in selecting the optimal <code>lambda</code
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">box_cox_vec</span><span class="op">(</span><span class="va">x</span>, lambda <span class="op">=</span> <span class="st">"auto"</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="fu">box_cox_inv_vec</span><span class="op">(</span><span class="va">x</span>, <span class="va">lambda</span><span class="op">)</span>
-
-<span class="fu">auto_lambda</span><span class="op">(</span>
-  <span class="va">x</span>,
-  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"guerrero"</span>, <span class="st">"loglik"</span><span class="op">)</span>,
-  lambda_lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,
-  lambda_upper <span class="op">=</span> <span class="fl">2</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">box_cox_vec</span><span class="op">(</span><span class="va">x</span>, lambda <span class="op">=</span> <span class="st">"auto"</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">box_cox_inv_vec</span><span class="op">(</span><span class="va">x</span>, <span class="va">lambda</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">auto_lambda</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"guerrero"</span>, <span class="st">"loglik"</span><span class="op">)</span>,</span>
+<span>  lambda_lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,</span>
+<span>  lambda_upper <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>A numeric vector.</p></dd>
+
+
 <dt>lambda</dt>
 <dd><p>The box cox transformation parameter.
 If set to "auto", performs automated lambda selection using <code>auto_lambda()</code>.</p></dd>
+
+
 <dt>silent</dt>
 <dd><p>Whether or not to report the automated <code>lambda</code> selection as a message.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>The method used for automatic <code>lambda</code> selection.
 Either "guerrero" or "loglik".</p></dd>
+
+
 <dt>lambda_lower</dt>
 <dd><p>A lower limit for automatic <code>lambda</code> selection</p></dd>
+
+
 <dt>lambda_upper</dt>
 <dd><p>An upper limit for automatic <code>lambda</code> selection</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -191,22 +202,22 @@ Use either of 2 methods:</p><ol><li><p>"guerrero" - Minimizes the non-seasonal v
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/timetk" class="external-link">timetk</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">d10_daily</span> <span class="op">&lt;-</span> <span class="va">m4_daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">id</span> <span class="op">==</span> <span class="st">"D10"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># --- VECTOR ----</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">value_bc</span> <span class="op">&lt;-</span> <span class="fu">box_cox_vec</span><span class="op">(</span><span class="va">d10_daily</span><span class="op">$</span><span class="va">value</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/timetk" class="external-link">timetk</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">d10_daily</span> <span class="op">&lt;-</span> <span class="va">m4_daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">id</span> <span class="op">==</span> <span class="st">"D10"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># --- VECTOR ----</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">value_bc</span> <span class="op">&lt;-</span> <span class="fu">box_cox_vec</span><span class="op">(</span><span class="va">d10_daily</span><span class="op">$</span><span class="va">value</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> box_cox_vec(): Using value for lambda: 1.25119350454964</span>
-<span class="r-in"><span class="va">value</span>    <span class="op">&lt;-</span> <span class="fu">box_cox_inv_vec</span><span class="op">(</span><span class="va">value_bc</span>, lambda <span class="op">=</span> <span class="fl">1.25119350454964</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># --- MUTATE ----</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">m4_daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>value_bc <span class="op">=</span> <span class="fu">box_cox_vec</span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">value</span>    <span class="op">&lt;-</span> <span class="fu">box_cox_inv_vec</span><span class="op">(</span><span class="va">value_bc</span>, lambda <span class="op">=</span> <span class="fl">1.25119350454964</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># --- MUTATE ----</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">m4_daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>value_bc <span class="op">=</span> <span class="fu">box_cox_vec</span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> box_cox_vec(): Using value for lambda: 1.25119350454964</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> box_cox_vec(): Using value for lambda: 0.0882021886505848</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> box_cox_vec(): Using value for lambda: 1.99992424816297</span>
@@ -226,7 +237,7 @@ Use either of 2 methods:</p><ol><li><p>"guerrero" - Minimizes the non-seasonal v
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> D10   2014-07-11 <span style="text-decoration: underline;">2</span>010    <span style="text-decoration: underline;">10</span>854.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> D10   2014-07-12 <span style="text-decoration: underline;">2</span>002.   <span style="text-decoration: underline;">10</span>796.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 9,733 more rows</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -238,7 +249,7 @@ Use either of 2 methods:</p><ol><li><p>"guerrero" - Minimizes the non-seasonal v
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

@@ -18,7 +18,7 @@ rolling (sliding) .period specified by the user."><meta property="og:image" cont
     
     <a class="navbar-brand me-2" href="../index.html">timetk</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,13 +124,13 @@ rolling (sliding) <code>.period</code> specified by the user.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">slidify</span><span class="op">(</span>
-  <span class="va">.f</span>,
-  .period <span class="op">=</span> <span class="fl">1</span>,
-  .align <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"center"</span>, <span class="st">"left"</span>, <span class="st">"right"</span><span class="op">)</span>,
-  .partial <span class="op">=</span> <span class="cn">FALSE</span>,
-  .unlist <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">slidify</span><span class="op">(</span></span>
+<span>  <span class="va">.f</span>,</span>
+<span>  .period <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  .align <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"center"</span>, <span class="st">"left"</span>, <span class="st">"right"</span><span class="op">)</span>,</span>
+<span>  .partial <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  .unlist <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -148,18 +148,27 @@ converted to an extractor function. Character vectors index by
 name and numeric vectors index by position; use a list to index
 by position and name at different levels. If a component is not
 present, the value of <code>.default</code> will be returned.</p></dd>
+
+
 <dt>.period</dt>
 <dd><p>The period size to roll over</p></dd>
+
+
 <dt>.align</dt>
 <dd><p>One of "center", "left" or "right".</p></dd>
+
+
 <dt>.partial</dt>
 <dd><p>Should the moving window be allowed to return partial (incomplete) windows
 instead of <code>NA</code> values. Set to FALSE by default, but can be switched to TRUE to remove <code>NA</code>'s.</p></dd>
+
+
 <dt>.unlist</dt>
 <dd><p>If the function returns a single value each time it is called,
 use <code>.unlist = TRUE</code>. If the function returns more than one value, or a more
 complicated object (like a linear model), use <code>.unlist = FALSE</code> to create
 a list-column of the rolling results.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -204,21 +213,21 @@ to rolling windows.</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/tidyquant" class="external-link">tidyquant</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/timetk" class="external-link">timetk</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">FB</span> <span class="op">&lt;-</span> <span class="va">FANG</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">symbol</span> <span class="op">==</span> <span class="st">"FB"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># --- ROLLING MEAN (SINGLE ARG EXAMPLE) ---</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Turn the normal mean function into a rolling mean with a 5 row .period</span></span>
-<span class="r-in"><span class="va">mean_roll_5</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="va">mean</span>, .period <span class="op">=</span> <span class="fl">5</span>, .align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">FB</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>rolling_mean_5 <span class="op">=</span> <span class="fu">mean_roll_5</span><span class="op">(</span><span class="va">adjusted</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/tidyquant" class="external-link">tidyquant</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/timetk" class="external-link">timetk</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">FB</span> <span class="op">&lt;-</span> <span class="va">FANG</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">symbol</span> <span class="op">==</span> <span class="st">"FB"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># --- ROLLING MEAN (SINGLE ARG EXAMPLE) ---</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Turn the normal mean function into a rolling mean with a 5 row .period</span></span></span>
+<span class="r-in"><span><span class="va">mean_roll_5</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="va">mean</span>, .period <span class="op">=</span> <span class="fl">5</span>, .align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">FB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>rolling_mean_5 <span class="op">=</span> <span class="fu">mean_roll_5</span><span class="op">(</span><span class="va">adjusted</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,008 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close    volume adjusted rolling_mean_5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -233,12 +242,12 @@ to rolling windows.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1  32.2  30.6  31.0  98<span style="text-decoration: underline;">892</span>800     31.0           30.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6  31.7  29.9  30.1 173<span style="text-decoration: underline;">242</span>600     30.1           30.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 998 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use `partial = TRUE` to allow partial windows (those with less than the full .period)</span></span>
-<span class="r-in"><span class="va">mean_roll_5_partial</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="va">mean</span>, .period <span class="op">=</span> <span class="fl">5</span>, .align <span class="op">=</span> <span class="st">"right"</span>, .partial <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">FB</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>rolling_mean_5 <span class="op">=</span> <span class="fu">mean_roll_5_partial</span><span class="op">(</span><span class="va">adjusted</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use `partial = TRUE` to allow partial windows (those with less than the full .period)</span></span></span>
+<span class="r-in"><span><span class="va">mean_roll_5_partial</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="va">mean</span>, .period <span class="op">=</span> <span class="fl">5</span>, .align <span class="op">=</span> <span class="st">"right"</span>, .partial <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">FB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>rolling_mean_5 <span class="op">=</span> <span class="fu">mean_roll_5_partial</span><span class="op">(</span><span class="va">adjusted</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,008 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close    volume adjusted rolling_mean_5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -253,18 +262,18 @@ to rolling windows.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1  32.2  30.6  31.0  98<span style="text-decoration: underline;">892</span>800     31.0           30.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6  31.7  29.9  30.1 173<span style="text-decoration: underline;">242</span>600     30.1           30.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 998 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># There's nothing stopping you from combining multiple rolling functions with</span></span>
-<span class="r-in"><span class="co"># different .period sizes in the same mutate call</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mean_roll_10</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="va">mean</span>, .period <span class="op">=</span> <span class="fl">10</span>, .align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">FB</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">symbol</span>, <span class="va">date</span>, <span class="va">adjusted</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span class="r-in">        rolling_mean_5  <span class="op">=</span> <span class="fu">mean_roll_5</span><span class="op">(</span><span class="va">adjusted</span><span class="op">)</span>,</span>
-<span class="r-in">        rolling_mean_10 <span class="op">=</span> <span class="fu">mean_roll_10</span><span class="op">(</span><span class="va">adjusted</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># There's nothing stopping you from combining multiple rolling functions with</span></span></span>
+<span class="r-in"><span><span class="co"># different .period sizes in the same mutate call</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mean_roll_10</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="va">mean</span>, .period <span class="op">=</span> <span class="fl">10</span>, .align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">FB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">symbol</span>, <span class="va">date</span>, <span class="va">adjusted</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        rolling_mean_5  <span class="op">=</span> <span class="fu">mean_roll_5</span><span class="op">(</span><span class="va">adjusted</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        rolling_mean_10 <span class="op">=</span> <span class="fu">mean_roll_10</span><span class="op">(</span><span class="va">adjusted</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,008 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date       adjusted rolling_mean_5 rolling_mean_10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -279,16 +288,16 @@ to rolling windows.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14     31.0           30.7            <span style="color: #BB0000;">NA</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FB     2013-01-15     30.1           30.9            29.8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 998 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># For summary operations like rolling means, we can accomplish large-scale</span></span>
-<span class="r-in"><span class="co"># multi-rolls with tk_augment_slidify()</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">FB</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">symbol</span>, <span class="va">date</span>, <span class="va">adjusted</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="tk_augment_slidify.html">tk_augment_slidify</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="va">adjusted</span>, .period <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">10</span>, .f <span class="op">=</span> <span class="va">mean</span>, .align <span class="op">=</span> <span class="st">"right"</span>,</span>
-<span class="r-in">        .names <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html" class="external-link">str_c</a></span><span class="op">(</span><span class="st">"MA_"</span>, <span class="fl">5</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># For summary operations like rolling means, we can accomplish large-scale</span></span></span>
+<span class="r-in"><span><span class="co"># multi-rolls with tk_augment_slidify()</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">FB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">symbol</span>, <span class="va">date</span>, <span class="va">adjusted</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="tk_augment_slidify.html">tk_augment_slidify</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="va">adjusted</span>, .period <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">10</span>, .f <span class="op">=</span> <span class="va">mean</span>, .align <span class="op">=</span> <span class="st">"right"</span>,</span></span>
+<span class="r-in"><span>        .names <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html" class="external-link">str_c</a></span><span class="op">(</span><span class="st">"MA_"</span>, <span class="fl">5</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,008 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date       adjusted  MA_5  MA_6  MA_7  MA_8  MA_9 MA_10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -303,19 +312,19 @@ to rolling windows.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14     31.0  30.7  30.5  30.3  29.9  29.7  <span style="color: #BB0000;">NA</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FB     2013-01-15     30.1  30.9  30.6  30.4  30.2  30.0  29.8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 998 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># --- GROUPS AND ROLLING ----</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># One of the most powerful things about this is that it works with</span></span>
-<span class="r-in"><span class="co"># groups since `mutate` is being used</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">FANG</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mean_roll_3</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="va">mean</span>, .period <span class="op">=</span> <span class="fl">3</span>, .align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">FANG</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">symbol</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>mean_roll <span class="op">=</span> <span class="fu">mean_roll_3</span><span class="op">(</span><span class="va">adjusted</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># --- GROUPS AND ROLLING ----</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># One of the most powerful things about this is that it works with</span></span></span>
+<span class="r-in"><span><span class="co"># groups since `mutate` is being used</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">FANG</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mean_roll_3</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="va">mean</span>, .period <span class="op">=</span> <span class="fl">3</span>, .align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">FANG</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">symbol</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>mean_roll <span class="op">=</span> <span class="fu">mean_roll_3</span><span class="op">(</span><span class="va">adjusted</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 20 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   symbol [4]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close   volume adjusted mean_roll</span>
@@ -340,16 +349,16 @@ to rolling windows.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> NFLX   2013-01-04  96.5  97.7  95.5  96.0 17<span style="text-decoration: underline;">761</span>100     13.7      13.6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> NFLX   2013-01-07  96.4 102.   96.1  99.2 45<span style="text-decoration: underline;">550</span>400     14.2      13.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span> NFLX   2013-01-08 100.  101.   96.8  97.2 24<span style="text-decoration: underline;">714</span>900     13.9      13.9</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># --- ROLLING CORRELATION (MULTIPLE ARG EXAMPLE) ---</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># With 2 args, use the purrr syntax of ~ and .x, .y</span></span>
-<span class="r-in"><span class="co"># Rolling correlation example</span></span>
-<span class="r-in"><span class="va">cor_roll</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span><span class="op">)</span>, .period <span class="op">=</span> <span class="fl">5</span>, .align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">FB</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>running_cor <span class="op">=</span> <span class="fu">cor_roll</span><span class="op">(</span><span class="va">adjusted</span>, <span class="va">open</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># --- ROLLING CORRELATION (MULTIPLE ARG EXAMPLE) ---</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># With 2 args, use the purrr syntax of ~ and .x, .y</span></span></span>
+<span class="r-in"><span><span class="co"># Rolling correlation example</span></span></span>
+<span class="r-in"><span><span class="va">cor_roll</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span><span class="op">)</span>, .period <span class="op">=</span> <span class="fl">5</span>, .align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">FB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>running_cor <span class="op">=</span> <span class="fu">cor_roll</span><span class="op">(</span><span class="va">adjusted</span>, <span class="va">open</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,008 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close    volume adjusted running_cor</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -364,24 +373,24 @@ to rolling windows.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1  32.2  30.6  31.0  98<span style="text-decoration: underline;">892</span>800     31.0       0.667</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6  31.7  29.9  30.1 173<span style="text-decoration: underline;">242</span>600     30.1       0.379</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 998 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># With &gt;2 args, create an anonymous function with &gt;2 args or use</span></span>
-<span class="r-in"><span class="co"># the purrr convention of ..1, ..2, ..3 to refer to the arguments</span></span>
-<span class="r-in"><span class="va">avg_of_avgs</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span></span>
-<span class="r-in">    <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">z</span><span class="op">)</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fl">3</span>,</span>
-<span class="r-in">    .period <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">    .align <span class="op">=</span> <span class="st">"right"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Or</span></span>
-<span class="r-in"><span class="va">avg_of_avgs</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span></span>
-<span class="r-in">    <span class="op">~</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">..1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">..2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">..3</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fl">3</span>,</span>
-<span class="r-in">    .period <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">    .align  <span class="op">=</span> <span class="st">"right"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">FB</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>avg_of_avgs <span class="op">=</span> <span class="fu">avg_of_avgs</span><span class="op">(</span><span class="va">open</span>, <span class="va">high</span>, <span class="va">low</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># With &gt;2 args, create an anonymous function with &gt;2 args or use</span></span></span>
+<span class="r-in"><span><span class="co"># the purrr convention of ..1, ..2, ..3 to refer to the arguments</span></span></span>
+<span class="r-in"><span><span class="va">avg_of_avgs</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">z</span><span class="op">)</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>    .period <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>    .align <span class="op">=</span> <span class="st">"right"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Or</span></span></span>
+<span class="r-in"><span><span class="va">avg_of_avgs</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="op">~</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">..1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">..2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">..3</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>    .period <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>    .align  <span class="op">=</span> <span class="st">"right"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">FB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>avg_of_avgs <span class="op">=</span> <span class="fu">avg_of_avgs</span><span class="op">(</span><span class="va">open</span>, <span class="va">high</span>, <span class="va">low</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,008 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close    volume adjusted avg_of_avgs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -396,16 +405,16 @@ to rolling windows.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1  32.2  30.6  31.0  98<span style="text-decoration: underline;">892</span>800     31.0        <span style="color: #BB0000;">NA</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6  31.7  29.9  30.1 173<span style="text-decoration: underline;">242</span>600     30.1        29.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 998 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Optional arguments MUST be passed at the creation of the rolling function</span></span>
-<span class="r-in"><span class="co"># Only data arguments that are "rolled over" are allowed when calling the</span></span>
-<span class="r-in"><span class="co"># rolling version of the function</span></span>
-<span class="r-in"><span class="va">FB</span><span class="op">$</span><span class="va">adjusted</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">roll_mean_na_rm</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, .period <span class="op">=</span> <span class="fl">5</span>, .align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">FB</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>roll_mean <span class="op">=</span> <span class="fu">roll_mean_na_rm</span><span class="op">(</span><span class="va">adjusted</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Optional arguments MUST be passed at the creation of the rolling function</span></span></span>
+<span class="r-in"><span><span class="co"># Only data arguments that are "rolled over" are allowed when calling the</span></span></span>
+<span class="r-in"><span><span class="co"># rolling version of the function</span></span></span>
+<span class="r-in"><span><span class="va">FB</span><span class="op">$</span><span class="va">adjusted</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">roll_mean_na_rm</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, .period <span class="op">=</span> <span class="fl">5</span>, .align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">FB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>roll_mean <span class="op">=</span> <span class="fu">roll_mean_na_rm</span><span class="op">(</span><span class="va">adjusted</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,008 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close    volume adjusted roll_mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -420,18 +429,18 @@ to rolling windows.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FB     2013-01-14  32.1  32.2  30.6  31.0  98<span style="text-decoration: underline;">892</span>800     31.0      30.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FB     2013-01-15  30.6  31.7  29.9  30.1 173<span style="text-decoration: underline;">242</span>600     30.1      30.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 998 more rows</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># --- ROLLING REGRESSIONS ----</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Rolling regressions are easy to implement using `.unlist = FALSE`</span></span>
-<span class="r-in"><span class="va">lm_roll</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">.x</span> <span class="op">~</span> <span class="va">.y</span><span class="op">)</span>, .period <span class="op">=</span> <span class="fl">90</span>, .unlist <span class="op">=</span> <span class="cn">FALSE</span>, .align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">FB</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>numeric_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>rolling_lm <span class="op">=</span> <span class="fu">lm_roll</span><span class="op">(</span><span class="va">adjusted</span>, <span class="va">numeric_date</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">rolling_lm</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># --- ROLLING REGRESSIONS ----</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Rolling regressions are easy to implement using `.unlist = FALSE`</span></span></span>
+<span class="r-in"><span><span class="va">lm_roll</span> <span class="op">&lt;-</span> <span class="fu">slidify</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">.x</span> <span class="op">~</span> <span class="va">.y</span><span class="op">)</span>, .period <span class="op">=</span> <span class="fl">90</span>, .unlist <span class="op">=</span> <span class="cn">FALSE</span>, .align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">FB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>numeric_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>rolling_lm <span class="op">=</span> <span class="fu">lm_roll</span><span class="op">(</span><span class="va">adjusted</span>, <span class="va">numeric_date</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">rolling_lm</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 918 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    symbol date        open  high   low close   volume adjusted numeric_date</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -446,10 +455,10 @@ to rolling windows.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FB     2013-05-23  24.8  25.5  24.8  25.1 37<span style="text-decoration: underline;">663</span>100     25.1        <span style="text-decoration: underline;">15</span>848</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FB     2013-05-24  25.0  25.0  24.1  24.3 58<span style="text-decoration: underline;">727</span>900     24.3        <span style="text-decoration: underline;">15</span>849</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 908 more rows, and 1 more variable: rolling_lm &lt;list&gt;</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -461,7 +470,7 @@ to rolling windows.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

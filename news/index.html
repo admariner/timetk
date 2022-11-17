@@ -116,7 +116,9 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.8.2" id="timetk-282">timetk 2.8.2<a class="anchor" aria-label="anchor" href="#timetk-282"></a></h2>
-<p><strong>Fixes</strong></p>
+<p><strong>New Features</strong></p>
+<ul><li>
+<code><a href="../reference/plot_time_series.html">plot_time_series()</a></code>: Gets new arguments to specify <code>.x_intercept</code> and <code>.x_intercept_color</code>. <a href="https://github.com/business-science/timetk/issues/131" class="external-link">#131</a></li></ul><p><strong>Fixes</strong></p>
 <ul><li>Fix error in <code><a href="../reference/plot_time_series.html">plot_time_series()</a></code> when <code>.group_names</code> is not found. <a href="https://github.com/business-science/timetk/issues/121" class="external-link">#121</a></li>
 <li>Merge variable checking update needed for <code>recipes &gt;= 1.0.3</code> <a href="https://github.com/business-science/timetk/issues/132" class="external-link">#132</a></li>
 </ul></div>
@@ -414,7 +416,7 @@
 <code><a href="../reference/time_series_cv.html">time_series_cv()</a></code> - Create <code>rsample</code> cross validation sets for time series. This function produces a sampling plan starting with the most recent time series observations, rolling backwards.</li></ul><p><strong>New Vector Functions:</strong></p>
 <p>These functions are useful on their own inside of <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> and power many of the new plotting and recipes functions.</p>
 <ul><li>
-<code>roll_apply_vec()</code> - Vectorized rolling apply function - wraps <code><a href="https://rdrr.io/pkg/slider/man/slide.html" class="external-link">slider::slide_vec()</a></code>
+<code>roll_apply_vec()</code> - Vectorized rolling apply function - wraps <code><a href="https://slider.r-lib.org/reference/slide.html" class="external-link">slider::slide_vec()</a></code>
 </li>
 <li>
 <code><a href="../reference/smooth_vec.html">smooth_vec()</a></code> - Vectorized smoothing function - Applies Local Polynomial Regression (LOESS)</li>
